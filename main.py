@@ -5,6 +5,7 @@ from pymongo import MongoClient
 app = Flask(__name__)
 
 MONGO_URI = "mongodb+srv://soulxpressioninc_db_user:Rosa2024@rosaeduagent.3hh4cz3.mongodb.net/?appName=Rosaeduagent"
+
 @app.route("/webhook", methods=["POST"])
 def webhook():
     try:
@@ -18,15 +19,15 @@ def webhook():
         results = list(teachers.find({}, {"_id": 0}))
         
         struggling = [t for t in results if any(
-            score < 60 for score in t["scores"].values()
+            int(score) < 60 for score in t["scores"].values()
         )]
         
         if "literacy" in query:
-            filtered = [t for t in struggling if t["scores"]["literacy_instruction"] < 60]
+            filtered = [t for t in struggling if int(t["scores"]["literacy_instruction"]) < 60]
         elif "discipline" in query or "classroom" in query:
-            filtered = [t for t in struggling if t["scores"]["classroom_management"] < 60]
+            filtered = [t for t in struggling if int(t["scores"]["classroom_management"]) < 60]
         elif "lesson" in query or "delivery" in query:
-            filtered = [t for t in struggling if t["scores"]["lesson_delivery"] < 60]
+            filtered = [t for t in struggling if int(t["scores"]["lesson_delivery"]) < 60]
         else:
             filtered = struggling
         
@@ -39,7 +40,7 @@ def webhook():
         client.close()
         
     except Exception as e:
-       response_text = f"Database error: {str(e)}"
+        response_text = f"Database error: {str(e)}"
     
     return jsonify({
         "fulfillmentText": response_text
