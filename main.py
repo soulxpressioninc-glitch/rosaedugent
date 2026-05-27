@@ -4,8 +4,7 @@ from pymongo import MongoClient
 
 app = Flask(__name__)
 
-MONGO_URI = "mongodb+srv://soulxpressioninc_db_user:<Ardeeudiqueenie22@>@rosaeduagent.3hh4cz3.mongodb.net/?appName=Rosaeduagent
- "
+MONGO_URI = "mongodb+srv://soulxpressioninc_db_user:Ardeeuduqueenie22@rosaeduagent.3hh4cz3.mongodb.net/?appName=Rosaeduagent"
 
 @app.route("/webhook", methods=["POST"])
 def webhook():
