@@ -40,7 +40,7 @@ def webhook():
         client.close()
         
     except Exception as e:
-        response_text = "I encountered an error accessing the teacher database. Please try again."
+       response_text = f"Database error: {str(e)}"
     
     return jsonify({
         "fulfillmentText": response_text
