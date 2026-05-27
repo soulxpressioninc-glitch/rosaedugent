@@ -1,13 +1,10 @@
-
-cd rosaedugent
-nano main.py
 import os
 from flask import Flask, request, jsonify
 from pymongo import MongoClient
 
 app = Flask(__name__)
 
-MONGO_URI = "mongodb+srv://soulxpressioninc_db_user:<db_Ardeeuduqueenie22@>@rosaeduagent.3hh4cz3.mongodb.net/?appName=Rosaeduagent "
+MONGO_URI = "mongodb+srv://soulxpressioninc_db_user:Ardeeuduqueenie22@rosaeduagent.3hh4cz3.mongodb.net/?appName=Rosaeduagent"
 client = MongoClient(MONGO_URI)
 db = client["eduagent"]
 teachers = db["teachers"]
