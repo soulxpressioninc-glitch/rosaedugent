@@ -6,6 +6,11 @@ app = Flask(__name__)
 
 MONGO_URI = "mongodb+srv://soulxpressioninc_db_user:Rosa2024@rosaeduagent.3hh4cz3.mongodb.net/?appName=Rosaeduagent"
 
+def get_score(score):
+    if isinstance(score, dict):
+        return int(score.get("$numberInt", 0))
+    return int(score)
+
 @app.route("/webhook", methods=["POST"])
 def webhook():
     try:
@@ -19,15 +24,15 @@ def webhook():
         results = list(teachers.find({}, {"_id": 0}))
         
         struggling = [t for t in results if any(
-            int(score) < 60 for score in t["scores"].values()
+            get_score(score) < 60 for score in t["scores"].values()
         )]
         
         if "literacy" in query:
-            filtered = [t for t in struggling if int(t["scores"]["literacy_instruction"]) < 60]
+            filtered = [t for t in struggling if get_score(t["scores"]["literacy_instruction"]) < 60]
         elif "discipline" in query or "classroom" in query:
-            filtered = [t for t in struggling if int(t["scores"]["classroom_management"]) < 60]
+            filtered = [t for t in struggling if get_score(t["scores"]["classroom_management"]) < 60]
         elif "lesson" in query or "delivery" in query:
-            filtered = [t for t in struggling if int(t["scores"]["lesson_delivery"]) < 60]
+            filtered = [t for t in struggling if get_score(t["scores"]["lesson_delivery"]) < 60]
         else:
             filtered = struggling
         
