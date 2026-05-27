@@ -9,7 +9,7 @@ MONGO_URI = "mongodb+srv://soulxpressioninc_db_user:Rosa2024@rosaeduagent.3hh4cz
 def webhook():
     try:
         client = MongoClient(MONGO_URI, serverSelectionTimeoutMS=3000)
-        db = client["eduagent"]
+        db = client["rosaeduagent"]
         teachers = db["teachers"]
         
         req = request.get_json()
