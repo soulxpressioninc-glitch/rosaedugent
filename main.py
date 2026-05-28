@@ -13,13 +13,11 @@ def webhook():
         db = client["rosaeduagent"]
         teachers = db["teachers"]
         req = request.get_json()
-        query = req.get("queryResult", {}).get("queryText", "").lower()
-        results = list(teachers.find({}, {"_id": 0}))
-        struggling = [t for t in results if t.get("improvement_plan_active") in [True, "true", 1]]
-        if not struggling:
+        results = list(teachers.find({"improvement_plan_active": {"$ne": False}}, {"_id": 0}))
+        if not results:
             response_text = "All teachers are currently performing well. No active improvement plans at this time."
         else:
-            names = ", ".join([t["name"] for t in struggling])
+            names = ", ".join([t["name"] for t in results])
             response_text = f"The following teachers have active improvement plans: {names}. I recommend immediate coaching sessions, peer observation, and structured support targeting their weakest areas."
         client.close()
     except Exception as e:
