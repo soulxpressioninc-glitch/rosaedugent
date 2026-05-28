@@ -11,7 +11,7 @@ def webhook():
     try:
         client = MongoClient(MONGO_URI, serverSelectionTimeoutMS=3000)
         db = client["Rosaeduagent"]
-        teachers = db["teachers"]
+        teachers = db["Teachers"]
         req = request.get_json()
         results = list(teachers.find({}, {"_id": 0}))
         total = len(results)
