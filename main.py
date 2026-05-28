@@ -10,7 +10,8 @@ MONGO_URI = os.environ.get("MONGO_URI")
 def webhook():
     try:
         client = MongoClient(MONGO_URI, serverSelectionTimeoutMS=3000)
-db = client["Rosaeduagent"]        teachers = db["teachers"]
+        db = client["Rosaeduagent"]
+        teachers = db["teachers"]
         req = request.get_json()
         results = list(teachers.find({"improvement_plan_active": {"$ne": False}}, {"_id": 0}))
         if not results:
