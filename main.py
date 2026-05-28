@@ -15,7 +15,7 @@ def webhook():
         req = request.get_json()
         query = req.get("queryResult", {}).get("queryText", "").lower()
         results = list(teachers.find({}, {"_id": 0}))
-        struggling = [t for t in results if t.get("improvement_plan_active") == True]
+        struggling = [t for t in results if t.get("improvement_plan_active") in [True, "true", 1]]
         if not struggling:
             response_text = "All teachers are currently performing well. No active improvement plans at this time."
         else:
